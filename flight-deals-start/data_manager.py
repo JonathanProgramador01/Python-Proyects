@@ -23,6 +23,7 @@ class DataManager:
         self.id = 2
 
     def get_informacion_sheet(self):
+        print(self.sheet.json())
         return {"sheet data": self.sheet.json()["prices"]}
 
 

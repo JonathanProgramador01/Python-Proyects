@@ -10,44 +10,37 @@ class FlightData:
     le pases el iata code y la fecha y ella te regrese el vuelo mas barato
 
     """
-    def __init__(self,iata_code: list, prices: list):
+    def __init__(self):
 
         self.flight_prices = []
-        self.ita_code = iata_code
         self.flight_search = FlightSearch()
-        date = datetime.datetime.now() + datetime.timedelta(days = 100)
         self.index_days = 1
-        self.maxprice = prices # esta es de mi
 
-        
-
-
-        print(date.strftime("%Y-%m-%d"))
-
-    def get_the_cheaper_flight(self,):
+    def get_the_cheaper_flight(self, city: list, iata_code : list, lowest_price: list):
 
         for i in range(6):
-            cheaper = self.maxprice[i]
-            for j in range(30):
+            flag = 0
+            max = lowest_price[i] # mas es el que va a contener el valor minimo
+            print(f"Buscando vuelo para {city[i]}: ")
+            for j in range(30*6):
                 date = datetime.datetime.now() + datetime.timedelta(days=self.index_days)
                 date = date.strftime("%Y-%m-%d")
                 self.index_days += 1
 
 
+                cheaper = self.flight_search.Search_Fights(iata_code[i], date, max) # aqui supuestamente encontrando el viaje mas barato de ese dia
+                if cheaper is not None:
+                        flag = 1
+                        max = cheaper
 
+            if flag == 1: # esque si encontro
 
-                if self.flight_search.Search_Fights(self.ita_code[i], date, self.maxprice[i])
+                print("precioo ",max)
+                self.flight_prices.append(max)
+            else:
 
-
-
-
-#150.45
-
-        
-
-
-
-
+                print("precioo  No se eoncontro un viaje mas barato al precio que estas pidiendo", max)
+                self.flight_prices.append("No se eoncontro un viaje mas barato al precio que estas pidiendo")
 
 
 

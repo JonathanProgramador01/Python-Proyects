@@ -51,28 +51,29 @@ class FlightSearch:
 
     def Get_IATA_Code(self, country):
         """"
-        Esta funcion me regresa mi mi vuelo mas barato de ese dia
+        Esta funcion me regresa mi IATA de la country que yo le pase
         """
         header = {
             "Authorization": f"Bearer {self.ACCESS_TOKEN}"
         }
         param = {
             "keyword": country,
-            "max": 1
+            "max": 2,
+            "includeX":"AIRPORTS"
         }
 
         solicitud = requests.get(url=URL+ENDPOINT, params=param, headers=header)
         return solicitud.json()["data"][0]["iataCode"]
 
-    def Search_Fights(self,destinacion_iata, date, maxprice:int,cheaper:int):
+    def Search_Fights(self, destinacion_iata, date, cheaper: int): # el cheaper se le pasa mi precio maximo que despues se va actualizar con un precio menor
         params = {
             "originLocationCode": LOCACION_IATA,
             "destinationLocationCode": destinacion_iata,
             "nonStop": "true",
-            "currencyCode": "EUR",
+            "currencyCode": "GBP",
             "adults": 1,
             "departureDate": date,
-            "maxPrice": maxprice
+            "maxPrice": cheaper
 
 
         }
@@ -83,15 +84,20 @@ class FlightSearch:
         solicitud = requests.get(url="https://test.api.amadeus.com/v2/shopping/flight-offers",params=params,headers=header)
 
 
-
-        print(solicitud.json())
+        flag = 0
+        #print(solicitud.json())
         for info in solicitud.json()["data"]:
-            if float(info["price"]["total"]) <float(cheaper):
-                cheaper = info["price"]["total"]
             print(info["price"]["total"])
-                
-        print(f"Vuelo mas barato encontrado {cheaper}")
-        return cheaper
+            if float(info["price"]["total"]) <=float(cheaper):
+                cheaper = info["price"]["total"]
+                flag = 1
+
+        if flag == 1: # esto quiere decir que si encontro un vuelo mas barato
+            #print(f"Vuelo mas barato encontrado {cheaper}")
+            return cheaper
+        else:
+            #print("No se encontro ningun vuelo barato relacionado con el preciomaximo que le estas pasando")
+            return
 
 
 
