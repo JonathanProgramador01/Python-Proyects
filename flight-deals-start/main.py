@@ -5,10 +5,6 @@ from flight_search import Flight_Search
 from flight_data import Flight_Data
 
 
-
-
-
-
 sheet = Data_Manager()
 flight = Flight_Search()
 data = Flight_Data()
@@ -44,7 +40,7 @@ print(vuelos_baratos)
 
 for i in range(len(vuelos_baratos)):
     mensaje = f"""
-low price alert! Only  £{vuelos_baratos[i][0]} to fly 
+low price alert! Only  ${vuelos_baratos[i][0]} to fly 
 from {vuelos_baratos[i][1]} to {vuelos_baratos[i][2]}, on {vuelos_baratos[i][3]} 
 until {vuelos_baratos[i][4]}.
     """

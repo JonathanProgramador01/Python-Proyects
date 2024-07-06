@@ -24,8 +24,3 @@ class Flight_Data:
         print( self.outbound_date)
         print( self.inbound_date)
 
-
-Object = Flight_Data()
-Object.find_cheapest([(196.69, 'LHR', 'CDG', '2024-07-07', '2025-01-03'), (178.48, 'LGW', 'FRA', '2024-07-07', '2025-01-03')])
-
-

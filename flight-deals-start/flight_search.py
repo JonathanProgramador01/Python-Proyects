@@ -14,7 +14,7 @@ load_dotenv()
 URL = "https://test.api.amadeus.com"
 API_KEY = os.environ.get("Api_Key")
 API_SECRET = os.environ.get("API_SECRET")
-ORIGIN_LOCACION = "LON"
+ORIGIN_LOCACION = "MEX"
 
 
 class Flight_Search:
@@ -52,6 +52,7 @@ class Flight_Search:
         try:
             solicitud = requests.get(url=URL+ENPOINT, headers=self.HEADER, params=PARAMETROS)
             data = solicitud.json()
+            print(data)
             return data["data"][0]["iataCode"]
         except Exception as e:
             print("Algooo fallo con tu requesttt de solicitudesss ")
@@ -80,7 +81,7 @@ class Flight_Search:
             "returnDate": fecha_dentro_180_dias,
             "adults": 1,
             "nonStop": "true",
-            "currencyCode": "GBP",
+            "currencyCode": "MXN",
             "maxPrice": lowest_price,
         }
         try:
@@ -94,6 +95,7 @@ class Flight_Search:
                     arrival = data["itineraries"][0]["segments"][0]["arrival"]["iataCode"]
 
             print(f"Geeting flights for {country}...")
+
             if flag != 0:
                 print(country, vuelo_mas_barato)
                 return (vuelo_mas_barato, departure, arrival,fecha_de_mañana, fecha_dentro_180_dias)
@@ -105,7 +107,6 @@ class Flight_Search:
         except:
             print("Naaa")
             return None
-
 
 
 
