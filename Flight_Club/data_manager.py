@@ -11,7 +11,9 @@ from pprint import pprint
 load_dotenv()
 
 
-SHEET_ENDPOINT = "https://api.sheety.co/ba1e1384d057dcdbba4ec68247a110fd/viajesss/prices"
+SHEET_ENDPOINT_PRICES = os.environ.get("SHEET_ENDPOINT_PRICES")
+SHEET_ENDPOINT_USERS = os.environ.get("SHEET_ENDPOINT_USERS")
+
 HEADER = {
     "Authorization": os.environ.get("Authorization"),
 }
@@ -22,13 +24,14 @@ class Data_Manager:
         self.city = []
         self.lowest = []
         self.id = []
+        self.gmails = []
     def get_info_sheet(self):
         """
         Optiene toda la informcion de mi sheet
         :return: toda la data de mi sheet
         """
         try:
-            solicitud = requests.get(url=SHEET_ENDPOINT, headers=HEADER)
+            solicitud = requests.get(url=SHEET_ENDPOINT_PRICES, headers=HEADER)
             data = solicitud.json()
             print(data)
             return data["prices"]
@@ -49,8 +52,13 @@ class Data_Manager:
                 "iataCode": iata_code
             }
         }
-        solicitud = requests.put(url=SHEET_ENDPOINT+"/"+str(id), json=DATA, headers=HEADER)
+        solicitud = requests.put(url=SHEET_ENDPOINT_PRICES+"/"+str(id), json=DATA, headers=HEADER)
 
 
+    def get_emails(self):
 
-
+        solicitud = requests.get(url=SHEET_ENDPOINT_USERS, headers=HEADER)
+        for gmail in solicitud.json()["users"]:
+            self.gmails.append(gmail["whatIsYourEmail ?"])
+        print(self.gmails)
+        

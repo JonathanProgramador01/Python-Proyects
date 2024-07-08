@@ -29,7 +29,11 @@ for i in range(len(sheet.city)):
 vuelos_baratos = []
 #Este es para ver mivuelo mas baratooo DE CADDAA COUNTRYYY
 for i in range(len(sheet.city)):
-    cheapest = flight.search_flight(iata_code=sheet.iatacode[i], lowest_price=sheet.lowest[i],country=sheet.city[i])
+    cheapest = flight.search_flight(iata_code=sheet.iatacode[i], lowest_price=sheet.lowest[i],country=sheet.city[i],nonshop="true")
+    # AQUI PRIMERO MANDO MI VUELO QUE NO SE PARE
+    if cheapest == None:
+        #AQUII SI LO VUELVO A MANDAR PERO AHORA MI VUELO CON PARADAS
+        cheapest = flight.search_flight(iata_code=sheet.iatacode[i], lowest_price=sheet.lowest[i],country=sheet.city[i],nonshop="false")
     if cheapest != None:
         vuelos_baratos.append(cheapest)
     time.sleep(1)
@@ -37,14 +41,14 @@ for i in range(len(sheet.city)):
 print(vuelos_baratos)
 
 ## ESTA DE AQUII ES GENEROS PUEDEN SER VUELOOSSS EL VUELO MAS BARATO DE MI SOLICITUDD NO LO COMPARA SIMPLEMENTE ME LO DAAAA
-
+sheet.get_emails()
 for i in range(len(vuelos_baratos)):
     mensaje = f"""
 low price alert! Only  ${vuelos_baratos[i][0]} to fly 
-from {vuelos_baratos[i][1]} to {vuelos_baratos[i][2]}, on {vuelos_baratos[i][3]} 
-until {vuelos_baratos[i][4]}.
+from {vuelos_baratos[i][1]} to {vuelos_baratos[i][2]} with {vuelos_baratos[i][5]} stop(s) departing on {vuelos_baratos[i][3]} 
+and returning on {vuelos_baratos[i][4]}.
     """
-    notification_manager.send_whatsapp(mensaje)
+    notification_manager.send_gmails(sheet.gmails, mensaje)
     time.sleep(2)
 
 

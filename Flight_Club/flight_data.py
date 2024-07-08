@@ -6,6 +6,7 @@ class Flight_Data:
         self.Arrival_airport_code = None
         self.outbound_date = None # fecha de salida
         self.inbound_date = None # fecha entrante
+        self.stops = None
 
 
     def find_cheapest(self, data: list):
@@ -18,9 +19,10 @@ class Flight_Data:
                 self.Arrival_airport_code = data[i][2]
                 self.outbound_date = data[i][3]
                 self.inbound_date = data[i][4]
+                self.stops = data[i][5]
         print(self.cheapest)
-        print( self.Depature_airport_code)
-        print( self.Arrival_airport_code)
-        print( self.outbound_date)
-        print( self.inbound_date)
-
+        print(self.Depature_airport_code)
+        print(self.Arrival_airport_code)
+        print(self.outbound_date)
+        print(self.inbound_date)
+        print(self.stops)
