@@ -50,5 +50,6 @@ def send_gmails(gmails: list,mensaje: str):
         coneccion.sendmail(from_addr=FROM,to_addrs=TO,msg=f"Subject:OFERTAA DE VUELOSSS\n\n{mensaje}")
         coneccion.close()
         print("SEM MANDOO GMAIL CON EXITOOO")
+        # este de aqui es para madar mis mensajes a mis pais de mi codigooo
 
 

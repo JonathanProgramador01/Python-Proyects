@@ -80,7 +80,7 @@ class Flight_Search:
         }
         solicutud = requests.get(url=URL+ENDPOINT, params=parameters, headers=self.HEADER)
         self.data = solicutud.json()
-        #print(self.data)
+        print(self.data)
 
         try:
             print("PAIS: ",country)
@@ -122,7 +122,7 @@ class Flight_Search:
 
 
                     Depature_airport_code = data["itineraries"][0]["segments"][0]["departure"]["iataCode"]
-                    Arrival_airport_code = data["itineraries"][0]["segments"][0]["arrival"]["iataCode"]
+                    Arrival_airport_code = data["itineraries"][0]["segments"][len(data["itineraries"][0]["segments"])-1]["arrival"]["iataCode"]
                     outbound_date = data["itineraries"][0]["segments"][0]["departure"]["at"].split("T")[0]
                     inbound_date = data["itineraries"][1]["segments"][1]["arrival"]["at"].split("T")[0]
 
@@ -166,7 +166,7 @@ class Flight_Search:
 
 
 Object = Flight_Search()
-a= Object.search_flight("PAR", 40_000, country="NYC", nonshop="true")
+a = Object.search_flight("PAR", 40_000, country="NYC", nonshop="false")
 print(a)
 
 
